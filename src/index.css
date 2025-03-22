@@ -1,0 +1,180 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  line-height: 1.5;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Accessibility focus styles */
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus,
+[tabindex]:focus {
+  outline: 2px solid var(--focus-outline-color, #2196F3);
+  outline-offset: var(--focus-outline-offset, 2px);
+}
+
+/* Skip to main content link - visible only when focused */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary-color, #2196F3);
+  color: white;
+  padding: 8px;
+  z-index: 9999;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Enhanced link styling */
+a {
+  text-decoration: none;
+  color: var(--primary-color, #2196F3);
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Large text mode adjustments for inputs */
+.large-text input,
+.large-text select,
+.large-text textarea,
+.large-text button {
+  font-size: calc(1rem * var(--font-scale, 1));
+  padding: calc(0.375rem * var(--font-scale, 1)) calc(0.75rem * var(--font-scale, 1));
+}
+
+/* High contrast mode specific adjustments */
+.high-contrast button,
+.high-contrast .MuiButton-root {
+  outline: 2px solid currentColor;
+}
+
+.high-contrast input,
+.high-contrast textarea,
+.high-contrast select {
+  border: 2px solid currentColor;
+  background-color: transparent;
+}
+
+.high-contrast a {
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+/* Screen reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Large text accessibility adjustments */
+.large-text {
+  --font-scale: 1.25;
+}
+
+.large-text h1, 
+.large-text .MuiTypography-h1 {
+  font-size: calc(2.5rem * var(--font-scale, 1.25));
+}
+
+.large-text h2,
+.large-text .MuiTypography-h2 {
+  font-size: calc(2rem * var(--font-scale, 1.25));
+}
+
+.large-text h3,
+.large-text .MuiTypography-h3 {
+  font-size: calc(1.75rem * var(--font-scale, 1.25));
+}
+
+.large-text h4,
+.large-text .MuiTypography-h4 {
+  font-size: calc(1.5rem * var(--font-scale, 1.25));
+}
+
+.large-text h5,
+.large-text .MuiTypography-h5 {
+  font-size: calc(1.25rem * var(--font-scale, 1.25));
+}
+
+.large-text h6,
+.large-text .MuiTypography-h6 {
+  font-size: calc(1rem * var(--font-scale, 1.25));
+}
+
+.large-text p,
+.large-text .MuiTypography-body1,
+.large-text .MuiTypography-body2 {
+  font-size: calc(1rem * var(--font-scale, 1.25));
+  line-height: 1.6;
+}
+
+/* Screen reader optimized mode */
+.screen-reader-optimized .MuiTable-root {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.screen-reader-optimized .MuiTableCell-root {
+  border: 1px solid currentColor;
+}
+
+.screen-reader-optimized .MuiSvgIcon-root {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.screen-reader-optimized button,
+.screen-reader-optimized .MuiButton-root {
+  text-align: left;
+  justify-content: flex-start;
+}
+
+/* Improve keyboard navigation indicators */
+.keyboard-user :focus {
+  outline: 3px solid var(--primary-color, #2196F3) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.4) !important;
+}

@@ -1,0 +1,197 @@
+:root {
+  /* Default theme variables - will be overridden by ThemeContext */
+  --primary-color: #2196F3;
+  --secondary-color: #3F51B5;
+  --accent-color: #009688;
+  --background-color: #F5F5F5;
+  --surface-color: #FFFFFF;
+  --text-color: #212121;
+  --gradient: linear-gradient(45deg, #2196F3 30%, #3F51B5 90%);
+
+  /* Accessibility variables */
+  --font-scale: 1;
+  --focus-outline-width: 2px;
+  --focus-outline-color: #2196F3;
+  --focus-outline-offset: 2px;
+  --motion-duration: 0.3s;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Border radius */
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 1rem;
+  --border-radius-xl: 1.5rem;
+  --border-radius-pill: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.2s;
+  --transition-medium: 0.3s;
+  --transition-slow: 0.5s;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Apply theme to common elements */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-medium), color var(--transition-medium);
+}
+
+.theme-primary-text {
+  color: var(--primary-color);
+}
+
+.theme-primary-bg {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.theme-secondary-text {
+  color: var(--secondary-color);
+}
+
+.theme-secondary-bg {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.theme-accent-text {
+  color: var(--accent-color);
+}
+
+.theme-accent-bg {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.theme-surface {
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-medium);
+}
+
+.theme-surface:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.theme-gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.theme-gradient-bg {
+  background: var(--gradient);
+  color: white;
+}
+
+/* Theme transition */
+.theme-transition {
+  transition: 
+    color var(--transition-medium),
+    background-color var(--transition-medium),
+    border-color var(--transition-medium),
+    box-shadow var(--transition-medium);
+}
+
+/* Accessibility styles */
+
+/* Large text mode */
+.large-text {
+  font-size: calc(1rem * var(--font-scale));
+}
+
+.large-text h1 {
+  font-size: calc(2.5rem * var(--font-scale));
+}
+
+.large-text h2 {
+  font-size: calc(2rem * var(--font-scale));
+}
+
+.large-text h3 {
+  font-size: calc(1.75rem * var(--font-scale));
+}
+
+.large-text h4 {
+  font-size: calc(1.5rem * var(--font-scale));
+}
+
+.large-text h5 {
+  font-size: calc(1.25rem * var(--font-scale));
+}
+
+.large-text button,
+.large-text .MuiButton-root {
+  font-size: calc(0.875rem * var(--font-scale));
+  padding: calc(0.5rem * var(--font-scale)) calc(1rem * var(--font-scale));
+}
+
+.large-text input,
+.large-text .MuiInputBase-root {
+  font-size: calc(1rem * var(--font-scale));
+}
+
+/* Reduced motion mode */
+.reduce-motion * {
+  transition-duration: 0.001s !important;
+  animation-duration: 0.001s !important;
+  animation-iteration-count: 1 !important;
+}
+
+/* High contrast mode */
+.high-contrast a {
+  text-decoration: underline;
+}
+
+.high-contrast button,
+.high-contrast .MuiButton-root,
+.high-contrast .MuiIconButton-root {
+  border: 2px solid currentColor;
+}
+
+.high-contrast :focus,
+.high-contrast .Mui-focused {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color) !important;
+  outline-offset: var(--focus-outline-offset) !important;
+}
+
+/* Screen reader optimizations */
+.screen-reader .visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.screen-reader .screen-reader-text {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.screen-reader :focus {
+  outline: 3px solid var(--focus-outline-color) !important;
+  outline-offset: 3px !important;
+}

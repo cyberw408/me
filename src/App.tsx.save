@@ -1,0 +1,84 @@
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { Container, CssBaseline } from "@mui/material";
+import axios from "axios";
+import Navigation from "./components/Navigation";
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import DeviceManagement from "./pages/DeviceManagement";
+import LocationTracking from "./pages/LocationTracking";
+import CallLogs from "./pages/CallLogs";
+import SocialMediaLogs from "./pages/SocialMediaLogs";
+import AppUsage from "./pages/AppUsage";
+import BrowsingHistory from "./pages/BrowsingHistory";
+import LiveScreen from "./pages/LiveScreen";
+import SecurityControls from "./pages/SecurityControls";
+import UserProfile from "./pages/UserProfile";
+import Notifications from "./pages/Notifications";
+import AdminDashboard from "./pages/AdminDashboard";
+import PushNotifications from "./pages/PushNotifications";
+import UserActivityLogs from "./pages/UserActivityLogs";
+import Geofencing from "./pages/Geofencing";
+import Keylogger from "./pages/Keylogger";
+import BlockApps from "./pages/BlockApps";
+import FileAccess from "./pages/FileAccess";
+import PhotoAccess from "./pages/PhotoAccess";
+import ContactAccess from "./pages/ContactAccess";
+import LiveAudio from "./pages/LiveAudio";
+import LiveCamera from "./pages/LiveCamera";
+
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+ x.</div>;
+
+  return (
+    <Router>
+      <CssBaseline />
+      <Navigation />
+      <Container>
+        <Routes>
+          <Route path="/" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+
+          {/* Protected Routes - Only accessible if authenticated */}
+          {isAuthenticated ? (
+            <>
+              <Route path="/devices" element={<DeviceManagement />} />
+              <Route path="/location" element={<LocationTracking />} />
+              <Route path="/calls" element={<CallLogs />} />
+              <Route path="/social-media" element={<SocialMediaLogs />} />
+              <Route path="/app-usage" element={<AppUsage />} />
+              <Route path="/browsing-history" element={<BrowsingHistory />} />
+              <Route path="/live-screen" element={<LiveScreen />} />
+              <Route path="/security-controls" element={<SecurityControls />} />
+              <Route path="/profile" element={<UserProfile />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/push-notifications" element={<PushNotifications isAdmin={true} />} />
+              <Route path="/user-activity-logs" element={<UserActivityLogs />} />
+              <Route path="/geofencing" element={<Geofencing />} />
+              <Route path="/keylogger" element={<Keylogger />} />
+              <Route path="/block-apps" element={<BlockApps />} />
+              <Route path="/file-access" element={<FileAccess />} />
+              <Route path="/photo-access" element={<PhotoAccess />} />
+              <Route path="/contact-access" element={<ContactAccess />} />
+              <Route path="/live-audio" element={<LiveAudio />} />
+              <Route path="/live-camera" element={<LiveCamera />} />
+            </>
+          ) : (
+            <Route path="*" element={<Navigate to="/login" />} />
+          )}
+        </Routes>
+      </Container>
+    </Router>
+  );
+};
+
+export default App;
